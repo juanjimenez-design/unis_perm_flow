@@ -98,4 +98,9 @@ def create_pipeline(**kwargs) -> Pipeline:
             namespace="lifetables_mensuales_cohorte",
             inputs={"cascadas_mensual_podada_censuras": "cascadas_mensual_podada_censuras"}
         ),
+        pipeline(
+            calculo_base_mensual,
+            namespace="lifetables_mensuales_alianza",
+            inputs={"cascadas_mensual_podada_censuras": "cascadas_mensual_podada_censuras"}
+        ),
     ])

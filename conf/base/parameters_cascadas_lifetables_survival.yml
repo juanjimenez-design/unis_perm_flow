@@ -12,6 +12,7 @@
 #-------------------------------------------------------------------------------
 survival:
   columnas_agrupacion:
+    - alianza
     - periodo_inicial
     - fecha_ingreso
     - nivel
@@ -25,6 +26,7 @@ survival:
     - student_journey
   
   group_columnas_agrupacion:
+    - alianza
     - periodo_inicial
     - fecha_ingreso
     - nivel
@@ -32,12 +34,14 @@ survival:
 
 
   columnas_to_order:
+    - alianza
     - fecha_ingreso
     - month
     - fecha_inicio
     - fecha_fin
 
   columnas_tokeep:
+    - alianza
     - periodo_inicial
     - fecha_ingreso
     - nivel
@@ -70,6 +74,7 @@ survival:
 
 lifetables_programa: 
   group_columnas_agrupacion:
+    - alianza
     - fecha_ingreso
     - periodo_inicial
     - nivel
@@ -82,6 +87,7 @@ lifetables_programa:
 
 lifetables_nivel: 
   group_columnas_agrupacion:
+    - alianza
     - fecha_ingreso
     - periodo_inicial
     - nivel
@@ -93,6 +99,7 @@ lifetables_nivel:
 
 lifetables_cohorte: 
   group_columnas_agrupacion:
+    - alianza
     - fecha_ingreso
     - periodo_inicial
   unidades_tiempo:   
@@ -106,6 +113,7 @@ lifetables_cohorte:
 #-------------------------------------------------------------------------------
 survival_mensual:
   group_columnas_agrupacion: 
+    - alianza
     - 'periodo_inicial'
     - 'fecha_ingreso'
     - 'nivel'
@@ -115,6 +123,7 @@ survival_mensual:
         
 lifetables_mensuales_programa: 
   group_columnas_agrupacion:
+    - alianza
     - periodo_inicial
     - fecha_ingreso
     - nivel
@@ -127,6 +136,7 @@ lifetables_mensuales_programa:
 
 lifetables_mensuales_nivel: 
   group_columnas_agrupacion:
+    - alianza
     - periodo_inicial
     - fecha_ingreso
     - nivel
@@ -138,9 +148,16 @@ lifetables_mensuales_nivel:
 
 lifetables_mensuales_cohorte: 
   group_columnas_agrupacion:
+    - alianza
     - periodo_inicial
     - fecha_ingreso
   unidades_tiempo:   
     - 'fecha_inicio'
     - 'fecha_fin' 
+    - 'month'
+
+lifetables_mensuales_alianza: 
+  group_columnas_agrupacion:
+    - alianza
+  unidades_tiempo:   
     - 'month'

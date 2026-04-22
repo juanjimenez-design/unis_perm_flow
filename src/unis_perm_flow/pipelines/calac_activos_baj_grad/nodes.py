@@ -237,6 +237,7 @@ def momento_activos(
 
     # 5. Indicadora ENGI
     # Al haber limpiado los nulos a 0, esta comparación ya no fallará
+    df_activos_cal['max_semana_teorica'] = pd.to_numeric(df_activos_cal['max_semana_teorica'], errors='coerce')
     df_activos_cal['engi'] = (
         df_activos_cal['semana_acumulada'] >= df_activos_cal['max_semana_teorica']
     ).astype(int)

@@ -146,3 +146,8 @@ lifetables_mensuales_cohorte.unis_tabla_vida_mensual:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_mensual_tabla_vida_cohorte.xlsx
   save_args: {index: False}
+
+lifetables_mensuales_alianza.unis_tabla_vida_mensual:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/unis_mensual_tabla_vida_alianza.xlsx
+  save_args: {index: False}
