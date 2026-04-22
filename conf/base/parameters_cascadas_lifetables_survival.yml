@@ -3,3 +3,144 @@
 #
 # Documentation for this file format can be found in "Parameters"
 # Link: https://docs.kedro.org/en/1.2.0/configuration/parameters.html
+
+# parameters/survival_analysis.yml
+
+# Parámetros globales para el primer nodo (crear_cascada_supervivencia)
+#-------------------------------------------------------------------------------
+# Semanal
+#-------------------------------------------------------------------------------
+survival:
+  columnas_agrupacion:
+    - periodo_inicial
+    - fecha_ingreso
+    - nivel
+    - programa
+    - fecha_inicio
+    - fecha_fin
+    - semana
+    - semana_acumulada
+    - month
+    - mes_academico
+    - student_journey
+  
+  group_columnas_agrupacion:
+    - periodo_inicial
+    - fecha_ingreso
+    - nivel
+    - programa
+
+
+  columnas_to_order:
+    - fecha_ingreso
+    - month
+    - fecha_inicio
+    - fecha_fin
+
+  columnas_tokeep:
+    - periodo_inicial
+    - fecha_ingreso
+    - nivel
+    - programa
+    - fecha_inicio
+    - fecha_fin
+    - semana
+    - semana_acumulada
+    - semana_limite
+    - month
+    - mes_academico
+    - nuevos
+    - ai
+    - di
+    - gi
+    - engi
+    - ci
+
+  dict_niveles_duracion:
+    maestria:
+      default: { semanas: 64, meses: 16, bloques: 8, periodos: 4 }
+      #analitica de datos: 
+    #especializacion:
+    #  default: { semanas: 32, meses: 8, bloques: 4, periodos: 2 }
+    #pregrado:
+    #  default: { semanas: 128, meses: 32, bloques: 16, periodos: 8 }
+    #  derecho: { semanas: 144, meses: 36, bloques: 18, periodos: 9 }
+
+# --- Parámetros para los Namespaces (Nodo calcular_km_y_eti_dinamico) ---
+
+lifetables_programa: 
+  group_columnas_agrupacion:
+    - fecha_ingreso
+    - periodo_inicial
+    - nivel
+    - programa
+  unidades_tiempo:   
+    - 'fecha_inicio'
+    - 'fecha_fin' 
+    - 'semana_acumulada'
+  
+
+lifetables_nivel: 
+  group_columnas_agrupacion:
+    - fecha_ingreso
+    - periodo_inicial
+    - nivel
+  unidades_tiempo:   
+    - 'fecha_inicio'
+    - 'fecha_fin' 
+    - 'semana_acumulada'
+
+
+lifetables_cohorte: 
+  group_columnas_agrupacion:
+    - fecha_ingreso
+    - periodo_inicial
+  unidades_tiempo:   
+    - 'fecha_inicio'
+    - 'fecha_fin' 
+    - 'semana_acumulada'
+
+
+#-------------------------------------------------------------------------------
+# Mensual
+#-------------------------------------------------------------------------------
+survival_mensual:
+  group_columnas_agrupacion: 
+    - 'periodo_inicial'
+    - 'fecha_ingreso'
+    - 'nivel'
+    - 'programa'
+    - 'month'
+    - 'mes_academico'
+        
+lifetables_mensuales_programa: 
+  group_columnas_agrupacion:
+    - periodo_inicial
+    - fecha_ingreso
+    - nivel
+    - programa
+  unidades_tiempo:   
+    - 'fecha_inicio'
+    - 'fecha_fin' 
+    - 'month'
+  
+
+lifetables_mensuales_nivel: 
+  group_columnas_agrupacion:
+    - periodo_inicial
+    - fecha_ingreso
+    - nivel
+  unidades_tiempo:   
+    - 'fecha_inicio'
+    - 'fecha_fin' 
+    - 'month'
+
+
+lifetables_mensuales_cohorte: 
+  group_columnas_agrupacion:
+    - periodo_inicial
+    - fecha_ingreso
+  unidades_tiempo:   
+    - 'fecha_inicio'
+    - 'fecha_fin' 
+    - 'month'
