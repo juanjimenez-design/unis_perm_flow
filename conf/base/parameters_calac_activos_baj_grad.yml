@@ -1,0 +1,105 @@
+# This is a boilerplate parameters config generated for pipeline 'calac_activos_baj_grad'
+# using Kedro 1.2.0.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/1.2.0/configuration/parameters.html
+
+
+# parameters/data_processing.yml
+bajas_calac:
+  unis_col_fechadef: 'fecha_de_baja_d'
+  unis_col_fechatemp: 'fecha_de_baja_t'
+  # Llaves para el merge temporal
+  merge_left_on: fecha_baja
+  merge_right_on: fecha_inicio
+  # Agrupador para que el tiempo se reinicie por cohorte
+  unis_calaca_col_cohorte_inicial: fecha_ingreso
+  # Columnas para ordenar los datos 
+  unis_calaca_col_sort:
+    - 'fecha_ingreso'
+    - 'fecha_inicio'
+    - 'semana_acumulada'
+
+graduados_calac:
+  # Configuración de Duraciones
+  dict_niveles_duracion:
+    maestria:
+      #default: { semanas: 48, meses: 12, bloques: 6, periodos: 3 }
+      default: { semanas: 64, meses: 16, bloques: 8, periodos: 4 }
+    #especializacion:
+      #default: { semanas: 32, meses: 8, bloques: 4, periodos: 2 }
+    #pregrado:
+     # default: { semanas: 128, meses: 32, bloques: 16, periodos: 8 }
+      #derecho: { semanas: 144, meses: 36, bloques: 18, periodos: 9 }
+  
+  # Parámetros de la función
+  graduation_col_gi: "gi"
+  graduation_fallback_weeks: None
+  graduation_join_keys_left: ["fecha_ingreso", "max_semana_teorica"]
+  graduation_join_keys_right: ["fecha_ingreso", "semana_acumulada"]
+
+activos_calac:
+  col_di: "di"
+  col_gi: "gi"
+  join_keys_left: "fecha_activo"
+  join_keys_right: "fecha_inicio"
+  group_key: "fecha_ingreso"
+
+# Configuración de Estructura de Datos
+orden_columnas_universo:
+  # 1. Identificación
+  - identificacion
+  - id_inconcert
+  - nombres
+  - usuario_institucional
+  - 'correo_2'
+  
+  # 2. Información Académica
+  - alianza
+  - cohorte
+  - periodo_inicial
+  - periodo_actual
+  - nivel
+  - programa
+  - estado
+  - sesion
+
+  # 3. Fechas de Hitos
+  - fecha_ingreso
+  - fecha_registro
+  - fecha_de_baja_t
+  - fecha_de_baja_d
+  - fecha_baja
+  - fecha_de_reingreso
+  - fecha_de_grado
+  - fecha_activo
+  
+  # 4. Contexto de Baja
+  - tipo_baja
+  - motivo_baja
+  - submotivo_baja
+  - comentarios
+  
+  # 5. Calendario Académico (Atributos Temporales)
+  - periodo_raw
+  - fecha_inicio
+  - fecha_fin
+  - shifted_fecha_inicio
+  - semana
+  - semana_acumulada
+  - month
+  - mes_academico
+  - anio_gregoriano
+  - mes_gregoriano
+  - student_journey
+  - tipo
+  
+  # 6. Indicadoras y Métricas Finales
+  - max_semana_teorica
+  - etapa_studen_journey
+  - ai
+  - di
+  - gi
+  - engi
+  - ci
+  

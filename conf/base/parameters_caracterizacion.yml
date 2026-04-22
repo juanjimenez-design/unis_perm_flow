@@ -1,0 +1,63 @@
+# This is a boilerplate parameters config generated for pipeline 'caracterizacion'
+# using Kedro 1.2.0.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/1.2.0/configuration/parameters.html
+
+
+# Parámetros para la limpieza y caracterización de la alianza Central
+
+unis_caracterizacion_params:
+  # Columnas que deben transformarse a formato fecha
+  col_fechas: 
+    - fecha_creacion
+    - fecha_nacimiento
+    - inicio_clases
+
+  # Columnas que contienen correos electrónicos para limpieza de objetos
+  col_emails:
+    - correo
+    - correo_electronico_del_contacto_emergencia
+
+  # Columnas para identificar duplicados (subset)
+  col_dd:
+    - identidad
+
+  # Columnas para ordenar antes de eliminar duplicados
+  col_sort:
+    - identidad
+    
+  params_columnas_caracterizacion:
+    - id_crm
+    - id_siu 
+    - matricula
+    - estado_inscripcion
+    - id_alumno
+    - tipo_identidad
+    - identidad
+    - primer_nombre
+    - segundo_nombre
+    - apellido_paterno
+    - apellido_materno
+    - genero
+    - fecha_nacimiento
+    - correo
+    - telefono_movil
+    - telefono_casa
+    - nacionalidad
+    - tipo_alumno
+    - codigo_programa
+    - periodo
+    - inicio_clases
+    - tipo_admision
+    - telefono_trabajo
+    - pais
+    - departamento
+    - municipio
+    - zona
+    - direccion_1
+    - direccion_2
+    - area_profesional
+    - universidad_de_origen
+    - direccion_del_titular_del_recibo
+    - direccion_adicional_del_titular_del_recibo

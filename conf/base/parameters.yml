@@ -1,0 +1,112 @@
+# This is a boilerplate parameters config generated for pipeline 'data_processing'
+# using Kedro 1.2.0.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/1.2.0/configuration/parameters.html
+# parameters/data_processing.yml
+
+# parameters/data_processing.yml
+
+# --- Parámetros para la tabla de Estudiantes (ESTACA) ---
+data_processing_estaca:
+  unis_col_fechas:
+    - fecha_registro
+    - cohorte
+    - fecha_de_baja_t
+    - fecha_de_baja_d
+    - fecha_de_reingreso
+    - fecha_de_grado
+  
+  unis_col_emails:
+    - usuario_institucional
+    
+  unis_col_dd:
+    - alianza
+    - cohorte
+    - nivel
+    - programa
+    - identificacion
+    
+  unis_col_sort:
+    - id_inconcert
+
+  unis_niveles_academicos:
+    maestria: posgrado
+    especializacion: posgrado
+    pregrado: pregrado
+
+  unis_estaca_column_order:
+    - id_inconcert
+    - identificacion
+    - correo_2
+    - nombres
+    - fecha_registro
+    - cohorte
+    - fecha_ingreso
+    - usuario_institucional
+    - nivel
+    - programa
+    - estado
+    - tipo_baja
+    - motivo_baja
+    - submotivo_baja
+    - comentarios
+    - fecha_de_baja_t
+    - fecha_de_baja_d
+    - fecha_de_reingreso
+    - fecha_de_grado
+    - exito_estudiantil
+    - alianza
+    - etapa_studen_journey
+    - di
+    - gi
+  
+
+
+# --- Parámetros para el Calendario Académico (CALACA) ---
+data_processing_calaca:
+  # Definición de columnas de entrada y procesamiento
+  unis_calaca_col_fechas: 
+    - fecha_inicio
+    - fecha_fin
+    
+  unis_calaca_col_fechaingreso: fecha_ingreso
+  unis_calaca_col_fecha_inicial_semana: fecha_inicio
+  unis_calaca_col_fecha_final_semana: fecha_fin
+  unis_calaca_col_cohorte_inicial: periodo_inicial
+  
+  unis_calaca_col_sort:
+    - periodo_inicial
+    - periodo_actual
+    - fecha_inicio
+    - semana
+
+  # Configuración del Student Journey
+  unis_calalaca_student_journey: 
+    - onboarding
+    - q1
+    - qa
+    
+  unis_calaca_journey_thresholds: 
+    - 2
+    - 4
+
+  # Orden final de las columnas en el dataset extendido
+  unis_calaca_column_order:
+    - periodo_raw    
+    - cohorte
+    - periodo_inicial
+    - fecha_ingreso
+    - periodo_actual
+    - sesion
+    - fecha_inicio
+    - fecha_fin
+    - shifted_fecha_inicio
+    - semana
+    - semana_acumulada
+    - month
+    - mes_academico
+    - anio_gregoriano
+    - mes_gregoriano
+    - student_journey
+    - tipo
