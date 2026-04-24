@@ -171,28 +171,20 @@ def calcular_censuras_academica(df: pd.DataFrame, id_cols: list) -> pd.DataFrame
         df.groupby(id_cols)['semana_acumulada'].transform('max') == df['semana_acumulada']
     )
 
-    # 3. ni (En Riesgo): Ya lo calculamos como el valor al inicio de la semana.
-    # Si por alguna razón no viene en el DF, ni es el 'ai' del periodo anterior.
-    # (Asumimos que ya tienes 'ni' del paso anterior, si no, descomenta la siguiente línea)
+    
+    # 3. ni (En Riesgo): Son los activos de la unidad de tiempo anterior
     df['ni'] = df.groupby(id_cols)['ai'].shift(1).fillna(df['nuevos'])
 
-    # 4. di (Eventos - Bajas):
-    # Usamos el 'di' que ya calculaste (conteo de identificaciones con baja).
-    # IMPORTANTE: En el último punto observado, no registramos bajas nuevas 
-    # porque no podemos confirmar si ocurrió el evento o se acabó el tiempo de observación.
-    #df['di_final'] = np.where(~df['es_ultimo_punto'], df['di'], 0)
-
-    # 5. ci (Censuras):
+    # 4. ci (Censuras):
     # Son los estudiantes que permanecen activos (ai) en el último punto 
-    # observado del dataset. 
-    df['ci'] = np.where(df['es_ultimo_punto'], df['ai'] + df['gi'], 0)
+    # observado del dataset o los graduados
+    df['ci'] = np.where(df['es_ultimo_punto'], df['ai']  , 0)
 
     # 6. Limpieza y preparación final
     # Eliminamos columnas auxiliares para no ensuciar el catálogo
     columnas_finales = df.drop(columns=['es_ultimo_punto'])
     
     return columnas_finales
-
 
 def calcular_km_y_eti_dinamico(
     df: pd.DataFrame, 
@@ -221,7 +213,7 @@ def calcular_km_y_eti_dinamico(
 
     Args:
         df: DataFrame con métricas base (ai, di, gi, engi, ci, nuevos).
-        group_cols: Columnas para la agrupación (ej:  'programa').
+        group_cols: Columnas para la agrupación (ej: 'nivel_academico', 'programa').
         conf_z: Valor Z para el intervalo de confianza (por defecto 1.96 para 95%).
 
     Returns:
@@ -232,6 +224,7 @@ def calcular_km_y_eti_dinamico(
     # Para 'nuevos', usamos max() porque el valor es constante por cohorte
     # Para ai, usamos sum() porque representa el stock de esa semana
     # Para di, gi, engi, ci, usamos sum() para consolidar eventos de la semana
+    #print(df.columns)
     df_agrupado = (
         df.groupby(group_cols + unidades_tiempo)
         .agg({
@@ -255,7 +248,7 @@ def calcular_km_y_eti_dinamico(
 
     # 4. Cálculo de ni (En riesgo)
     # n_i = activos_final + censuras_final + bajas_final
-    df_agrupado['ni'] = df_agrupado['ai'] + df_agrupado['ci'] + df_agrupado['di']
+    df_agrupado['ni'] = df_agrupado['ai'].shift(1).fillna(df_agrupado['nuevos']) - df_agrupado['ci'].shift(1).fillna(0)
     df_agrupado['ni'] = df_agrupado['ni'].clip(lower=0)
 
     # 5. Agrupación para métricas de probabilidad
@@ -280,7 +273,7 @@ def calcular_km_y_eti_dinamico(
     # 8. ETI (Eficiencia Terminal)
     # gi_engi_prev: Acumulado de ci (que incluye graduados/egresados) hasta la semana anterior
     ci_cum = grouped['ci'].cumsum()
-    gi_engi_prev = grouped['ci'].transform(lambda x: x.cumsum().shift(0).fillna(0))
+    gi_engi_prev = grouped['ci'].transform(lambda x: x.cumsum().shift(1).fillna(0))
     
     df_agrupado['nuevos'] = df_agrupado['n_total']
     denominador_eti = df_agrupado['n_total'] - gi_engi_prev
@@ -306,10 +299,8 @@ def calcular_km_y_eti_dinamico(
     cols_finales = group_cols + unidades_tiempo + ['nuevos', 'n_total', 'ni', 'ai','di','di_cum', 'gi', 'gi_cum', 'engi', 'ci','ci_cum',
         'qi', 'pi', 'km', 'km_se', 'km_ic_inf', 'km_ic_sup', 'eti'
     ]
-    
     df_agrupado = df_agrupado.sort_values( by = group_cols + unidades_tiempo)
     return df_agrupado[cols_finales].reset_index(drop=True)
-
 #----------------------------------------------------------------------
 #  crear_cascada_supervivencia
 #----------------------------------------------------------------------
