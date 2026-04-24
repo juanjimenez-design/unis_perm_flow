@@ -62,45 +62,51 @@ def create_pipeline(**kwargs) -> Pipeline:
         # Semanal --------------------------------------------------------------------
         pipeline(
             calculo_base,
-            namespace="lifetables_programa",
+            namespace="lifetables_semanal_programa",
             inputs={"cascadas_semanal_podada_censuras": "cascadas_semanal_podada_censuras"}
         ),
         
         pipeline(
             calculo_base,
-            namespace="lifetables_nivel",
+            namespace="lifetables_semanal_nivel",
             inputs={"cascadas_semanal_podada_censuras": "cascadas_semanal_podada_censuras"}
         ),
         
         
         pipeline(
             calculo_base,
-            namespace="lifetables_cohorte",
+            namespace="lifetables_semanal_cohorte",
+            inputs={"cascadas_semanal_podada_censuras": "cascadas_semanal_podada_censuras"}
+        ),
+
+        pipeline(
+            calculo_base,
+            namespace="lifetables_semanal_alianza",
             inputs={"cascadas_semanal_podada_censuras": "cascadas_semanal_podada_censuras"}
         ),
 
         # Mensual --------------------------------------------------------------------
         pipeline(
             calculo_base_mensual,
-            namespace="lifetables_mensuales_programa",
+            namespace="lifetables_mensual_programa",
             inputs={"cascadas_mensual_podada_censuras": "cascadas_mensual_podada_censuras"}
         ),
         
         pipeline(
             calculo_base_mensual,
-            namespace="lifetables_mensuales_nivel",
+            namespace="lifetables_mensual_nivel",
             inputs={"cascadas_mensual_podada_censuras": "cascadas_mensual_podada_censuras"}
         ),
         
         
         pipeline(
             calculo_base_mensual,
-            namespace="lifetables_mensuales_cohorte",
+            namespace="lifetables_mensual_cohorte",
             inputs={"cascadas_mensual_podada_censuras": "cascadas_mensual_podada_censuras"}
         ),
         pipeline(
             calculo_base_mensual,
-            namespace="lifetables_mensuales_alianza",
+            namespace="lifetables_mensual_alianza",
             inputs={"cascadas_mensual_podada_censuras": "cascadas_mensual_podada_censuras"}
         ),
     ])

@@ -72,7 +72,7 @@ survival:
 
 # --- Parámetros para los Namespaces (Nodo calcular_km_y_eti_dinamico) ---
 
-lifetables_programa: 
+lifetables_semanal_programa: 
   group_columnas_agrupacion:
     - alianza
     - fecha_ingreso
@@ -85,7 +85,7 @@ lifetables_programa:
     - 'semana_acumulada'
   
 
-lifetables_nivel: 
+lifetables_semanal_nivel: 
   group_columnas_agrupacion:
     - alianza
     - fecha_ingreso
@@ -97,7 +97,7 @@ lifetables_nivel:
     - 'semana_acumulada'
 
 
-lifetables_cohorte: 
+lifetables_semanal_cohorte: 
   group_columnas_agrupacion:
     - alianza
     - fecha_ingreso
@@ -107,6 +107,11 @@ lifetables_cohorte:
     - 'fecha_fin' 
     - 'semana_acumulada'
 
+lifetables_semanal_alianza: 
+  group_columnas_agrupacion:
+    - alianza
+  unidades_tiempo:   
+    - 'semana_acumulada'
 
 #-------------------------------------------------------------------------------
 # Mensual
@@ -121,7 +126,7 @@ survival_mensual:
     - 'month'
     - 'mes_academico'
         
-lifetables_mensuales_programa: 
+lifetables_mensual_programa: 
   group_columnas_agrupacion:
     - alianza
     - periodo_inicial
@@ -134,7 +139,7 @@ lifetables_mensuales_programa:
     - 'month'
   
 
-lifetables_mensuales_nivel: 
+lifetables_mensual_nivel: 
   group_columnas_agrupacion:
     - alianza
     - periodo_inicial
@@ -146,7 +151,7 @@ lifetables_mensuales_nivel:
     - 'month'
 
 
-lifetables_mensuales_cohorte: 
+lifetables_mensual_cohorte: 
   group_columnas_agrupacion:
     - alianza
     - periodo_inicial
@@ -156,7 +161,7 @@ lifetables_mensuales_cohorte:
     - 'fecha_fin' 
     - 'month'
 
-lifetables_mensuales_alianza: 
+lifetables_mensual_alianza: 
   group_columnas_agrupacion:
     - alianza
   unidades_tiempo:   

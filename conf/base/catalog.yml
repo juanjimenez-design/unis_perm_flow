@@ -106,48 +106,53 @@ cascadas_mensual_podada_censuras:
     engine: openpyxl  # Recomendado para manejar archivos .xlsx modernos    
 
 # Semanales
-lifetables_programa.unis_tabla_vida_semanal:
+lifetables_semanal_programa.unis_tabla_vida_semanal:
   type: pandas.ExcelDataset
-  filepath: data/08_reporting/unis_tabla_vida_programa.xlsx
+  filepath: data/08_reporting/unis_semanal_tabla_vida_programa.xlsx
   save_args: {index: False}
 
-lifetables_nivel.unis_tabla_vida_semanal:
+lifetables_semanal_nivel.unis_tabla_vida_semanal:
   type: pandas.ExcelDataset
-  filepath: data/08_reporting/unis_tabla_vida_nivel.xlsx
+  filepath: data/08_reporting/unis_semanal_tabla_vida_nivel.xlsx
   save_args: {index: False}
 
-lifetables_nivel_academico.unis_tabla_vida_semanal:
+lifetables_semanal_nivel_academico.unis_tabla_vida_semanal:
   type: pandas.ExcelDataset
-  filepath: data/08_reporting/unis_tabla_vida_nivel_academico.xlsx
+  filepath: data/08_reporting/unis_semanal_tabla_vida_nivel_academico.xlsx
   save_args: {index: False}
 
-lifetables_cohorte.unis_tabla_vida_semanal:
+lifetables_semanal_cohorte.unis_tabla_vida_semanal:
   type: pandas.ExcelDataset
-  filepath: data/08_reporting/unis_mensual_tabla_vida_cohorte.xlsx
+  filepath: data/08_reporting/unis_semanal_tabla_vida_cohorte.xlsx
   save_args: {index: False}
 
-# Mensuales
-lifetables_mensuales_programa.unis_tabla_vida_mensual:
+lifetables_semanal_alianza.unis_tabla_vida_semanal:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/unis_semanal_tabla_vida_alianza.xlsx
+  save_args: {index: False}
+
+# mensual
+lifetables_mensual_programa.unis_tabla_vida_mensual:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_mensual_tabla_vida_programa.xlsx
   save_args: {index: False}
 
-lifetables_mensuales_nivel.unis_tabla_vida_mensual:
+lifetables_mensual_nivel.unis_tabla_vida_mensual:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_mensual_tabla_vida_nivel.xlsx
   save_args: {index: False}
 
-lifetables_mensuales_nivel_academico.unis_tabla_vida_mensual:
+lifetables_mensual_nivel_academico.unis_tabla_vida_mensual:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_mensual_tabla_vida_nivel_academico.xlsx
   save_args: {index: False}
 
-lifetables_mensuales_cohorte.unis_tabla_vida_mensual:
+lifetables_mensual_cohorte.unis_tabla_vida_mensual:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_mensual_tabla_vida_cohorte.xlsx
   save_args: {index: False}
 
-lifetables_mensuales_alianza.unis_tabla_vida_mensual:
+lifetables_mensual_alianza.unis_tabla_vida_mensual:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_mensual_tabla_vida_alianza.xlsx
   save_args: {index: False}
