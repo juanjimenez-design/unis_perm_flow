@@ -178,7 +178,7 @@ def calcular_censuras_academica(df: pd.DataFrame, id_cols: list) -> pd.DataFrame
     # 4. ci (Censuras):
     # Son los estudiantes que permanecen activos (ai) en el último punto 
     # observado del dataset o los graduados
-    df['ci'] = np.where(df['es_ultimo_punto'], df['ai'] + df['gi'] + df['engi'] , 0)
+    df['ci'] = np.where(df['es_ultimo_punto'], df['ai'] + df['gi'] , 0)
 
     # 6. Limpieza y preparación final
     # Eliminamos columnas auxiliares para no ensuciar el catálogo
@@ -246,10 +246,26 @@ def calcular_km_y_eti_dinamico(
     # o simplemente tomamos el máximo si el grupo es la cohorte misma.
     df_agrupado['n_total'] = df_agrupado.groupby(group_cols)['nuevos'].transform('max')
 
-    # 4. Cálculo de ni (En riesgo)
-    # n_i = activos_final + censuras_final + bajas_final
-    df_agrupado['ni'] = df_agrupado['ai'].shift(1).fillna(df_agrupado['nuevos']) - df_agrupado['ci'].shift(1).fillna(0)
-    df_agrupado['ni'] = df_agrupado['ni'].clip(lower=0)
+    # # 4. Cálculo de ni (En riesgo)
+    # # n_i = activos_final - censuras
+    # df_agrupado['ni'] = df_agrupado['ai'].shift(1).fillna(df_agrupado['nuevos']) - df_agrupado['ci'].shift(1).fillna(0)
+    # df_agrupado['ni'] = df_agrupado['ni'].clip(lower=0)
+
+    ai_shifted = (
+        df_agrupado
+        .groupby(group_cols)['ai']
+        .shift(1)                                   # NaN en primera fila de cada grupo
+        .fillna(df_agrupado['nuevos'])              # primera fila: ai_0 = nuevos
+    )
+
+    ci_shifted = (
+        df_agrupado
+        .groupby(group_cols)['ci']
+        .shift(1)                                   # NaN en primera fila de cada grupo
+        .fillna(0)                                  # primera fila: ci_0 = 0 (sin censuras previas)
+    )
+
+    df_agrupado['ni'] = (ai_shifted - ci_shifted).clip(lower=0)
 
     # 5. Agrupación para métricas de probabilidad
     grouped = df_agrupado.groupby(group_cols)
@@ -273,14 +289,14 @@ def calcular_km_y_eti_dinamico(
     # 8. ETI (Eficiencia Terminal)
     # gi_engi_prev: Acumulado de ci (que incluye graduados/egresados) hasta la semana anterior
     ci_cum = grouped['ci'].cumsum()
-    gi_engi_prev = grouped['ci'].transform(lambda x: x.cumsum().shift(1).fillna(0))
+    gi_engi_prev = grouped['ci'].transform(lambda x: x.cumsum().shift(0).fillna(0))
     
     df_agrupado['nuevos'] = df_agrupado['n_total']
     denominador_eti = df_agrupado['n_total'] - gi_engi_prev
     df_agrupado['n_total'] = df_agrupado['n_total'] - gi_engi_prev
-    df_agrupado['eti'] = np.where(denominador_eti > 0, df_agrupado['ai'] / denominador_eti, 0)
+    df_agrupado['eti'] = np.where(denominador_eti > 0,( df_agrupado['ai'] + df_agrupado['ci'])/ denominador_eti, 0)
     # Calculamos la ETI cruda
-    eti_cruda = np.where(denominador_eti > 0, df_agrupado['ai'] / denominador_eti, 0)
+    eti_cruda = np.where(denominador_eti > 0, ( df_agrupado['ai'] + df_agrupado['ci']) / denominador_eti, 0)
 
     # Obtenemos la ETI de la semana anterior por grupo
     eti_anterior = grouped['eti'].shift(1).fillna(1.0) 
@@ -301,6 +317,7 @@ def calcular_km_y_eti_dinamico(
     ]
     df_agrupado = df_agrupado.sort_values( by = group_cols + unidades_tiempo)
     return df_agrupado[cols_finales].reset_index(drop=True)
+
 #----------------------------------------------------------------------
 #  crear_cascada_supervivencia
 #----------------------------------------------------------------------
