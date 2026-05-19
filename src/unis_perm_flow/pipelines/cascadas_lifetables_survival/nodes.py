@@ -178,7 +178,7 @@ def calcular_censuras_academica(df: pd.DataFrame, id_cols: list) -> pd.DataFrame
     # 4. ci (Censuras):
     # Son los estudiantes que permanecen activos (ai) en el último punto 
     # observado del dataset o los graduados
-    df['ci'] = np.where(df['es_ultimo_punto'], df['ai']  , 0)
+    df['ci'] = np.where(df['es_ultimo_punto'], df['ai'] + df['gi'] + df['engi'] , 0)
 
     # 6. Limpieza y preparación final
     # Eliminamos columnas auxiliares para no ensuciar el catálogo
