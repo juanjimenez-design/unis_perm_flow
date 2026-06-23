@@ -8,7 +8,8 @@ from kedro.pipeline import Node, Pipeline, node, pipeline
 from .nodes import momento_baja,\
                    momento_grado,\
                    momento_activos,\
-                   consolidar_estados_calac
+                   consolidar_estados_calac,\
+                   generate_train_coxph_forecast
 
 
 
@@ -71,6 +72,15 @@ def create_pipeline(**kwargs) -> Pipeline:
             ],
             outputs="unis_estados_calac",
             name="nodo_consolidar_estados_calac"
+        ),
+        node(
+            func=generate_train_coxph_forecast,
+            inputs=[
+                "unis_estados_calac",
+                "params:col_survival",
+            ],
+            outputs="unis_estados_calac_survival",
+            name="nodo_generate_train_coxph_forecast"
         ),
     ]
     )

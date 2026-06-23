@@ -265,7 +265,14 @@ def calcular_km_y_eti_dinamico(
         .fillna(0)                                  # primera fila: ci_0 = 0 (sin censuras previas)
     )
 
-    df_agrupado['ni'] = (ai_shifted - ci_shifted).clip(lower=0)
+    gi_shifted = (
+        df_agrupado
+        .groupby(group_cols)['gi']
+        .shift(1)                                   # NaN en primera fila de cada grupo
+        .fillna(0)                                  # primera fila: gi_0 = 0 (sin graduados previos)
+    )
+
+    df_agrupado['ni'] = (ai_shifted - ci_shifted + gi_shifted).clip(lower=0)
 
     # 5. Agrupación para métricas de probabilidad
     grouped = df_agrupado.groupby(group_cols)
@@ -292,11 +299,11 @@ def calcular_km_y_eti_dinamico(
     gi_engi_prev = grouped['ci'].transform(lambda x: x.cumsum().shift(0).fillna(0))
     
     df_agrupado['nuevos'] = df_agrupado['n_total']
-    denominador_eti = df_agrupado['n_total'] - gi_engi_prev
+    denominador_eti = df_agrupado['n_total'] - gi_engi_prev +  df_agrupado['ci']
     df_agrupado['n_total'] = df_agrupado['n_total'] - gi_engi_prev
-    df_agrupado['eti'] = np.where(denominador_eti > 0,( df_agrupado['ai'] + df_agrupado['ci'])/ denominador_eti, 0)
+    df_agrupado['eti'] = np.where(denominador_eti > 0,( df_agrupado['ni'] )/ denominador_eti, 0)
     # Calculamos la ETI cruda
-    eti_cruda = np.where(denominador_eti > 0, ( df_agrupado['ai'] + df_agrupado['ci']) / denominador_eti, 0)
+    eti_cruda = np.where(denominador_eti > 0, ( df_agrupado['ni'] ) / denominador_eti, 0)
 
     # Obtenemos la ETI de la semana anterior por grupo
     eti_anterior = grouped['eti'].shift(1).fillna(1.0) 

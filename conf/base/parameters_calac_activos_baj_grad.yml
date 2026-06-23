@@ -102,4 +102,15 @@ orden_columnas_universo:
   - gi
   - engi
   - ci
-  
+
+
+col_survival:
+  - 'identificacion'
+  - 'id_inconcert'
+  - 'periodo_inicial'
+  - 'nivel'
+  - 'programa'
+  - 'semana_acumulada'
+  - 'month'
+  - 'mes_gregoriano' 
+  - 'di'

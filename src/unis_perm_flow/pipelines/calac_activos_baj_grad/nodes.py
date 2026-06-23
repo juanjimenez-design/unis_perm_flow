@@ -297,3 +297,24 @@ def consolidar_estados_calac(
     # 3. Orden de las columnas
     universo = universo.loc[:,col_orden]
     return universo
+
+
+def generate_train_coxph_forecast(
+    df_unis_estados_calac: pd.DataFrame,
+    col_survival : list) -> pd.DataFrame:
+    """
+        Genera una base de datos apropiada para el análisis de sobrevivencia. 
+        Estas tablas servirán para reajustar el modelo COXPH y llevar a cabo enseguida el forecast.  
+
+        Args:
+            df_unis_estados_calac : Dataframe con los estados del estudiante y el calendario
+            col_survival : Lista con las columnas que identifican a los estudiantes, el tiempo de sobrevivencia y el estado de baja.
+
+        Returns:
+            pd.DataFrame: Datos de sobrevivencia
+    """
+    df_survival = df_unis_estados_calac.loc[:,col_survival]
+    df_survival.loc[(df_survival['di'] == 1) & (df_survival['month'] == 16), 'di' ] = 0
+    
+    return df_survival 
+        

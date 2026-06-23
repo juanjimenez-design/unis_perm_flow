@@ -65,24 +65,40 @@ unis_estaca_cd:
 unis_bajas_calendario_academico:
   type: pandas.ParquetDataset
   filepath: data/03_primary/unis_bajas_calendario_academico.parquet
+  versioned: true
   save_args:
     index: false
 
 unis_graduados_calendario_academico:
   type: pandas.ParquetDataset
   filepath: data/03_primary/unis_graduados_calendario_academico.parquet
+  versioned: true
   save_args:
     index: false
 
 unis_activos_calendario:
   type: pandas.ParquetDataset
   filepath: data/03_primary/unis_activos_calendario.parquet
+  versioned: true
   save_args:
     index: false
+
+
+unis_estados_calac_survival:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/unis_estados_calac_survival.parquet
+  versioned: true
+  save_args:
+    index: False    
+
+## --------------------------------------------------------------------
+## 08 Reporting
+## --------------------------------------------------------------------
 
 unis_estados_calac:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_estados_calac.xlsx
+  versioned: true
   save_args:
     index: False
     engine: openpyxl 
@@ -90,9 +106,12 @@ unis_estados_calac:
 unis_estados_calac_crt:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_estados_calac_crt.xlsx
+  versioned: true
   save_args:
     index: False
     engine: openpyxl    
+
+
 
 ## --------------------------------------------------------------------
 ## 8 Reporting
