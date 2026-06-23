@@ -111,12 +111,6 @@ unis_estados_calac_crt:
     index: False
     engine: openpyxl    
 
-
-
-## --------------------------------------------------------------------
-## 8 Reporting
-## --------------------------------------------------------------------
-
 cascadas_semanal_podada_censuras:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/cascadas_semanal_podada_censuras.xlsx
@@ -182,3 +176,19 @@ lifetables_mensual_alianza.unis_tabla_vida_mensual:
   type: pandas.ExcelDataset
   filepath: data/08_reporting/unis_mensual_tabla_vida_alianza.xlsx
   save_args: {index: False}
+
+## --------------------------------------------------------------------
+## 06 Models
+## --------------------------------------------------------------------
+
+df_cox_preparado:
+  type: pandas.ParquetDataset
+  filepath: data/04_Feature/df_cox_preparado.parquet
+
+modelo_cox_desercion:
+  type: pickle.PickleDataset
+  filepath: data/06_Models/unis_best_model_cox.pkl
+  backend: pickle
+  versioned: true 
+
+

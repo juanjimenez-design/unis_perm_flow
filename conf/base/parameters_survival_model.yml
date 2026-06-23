@@ -1,0 +1,19 @@
+# This is a boilerplate parameters config generated for pipeline 'survival_model'
+# using Kedro 1.2.0.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/1.2.0/configuration/parameters.html
+
+survival_model:
+  target_duration: "month"
+  target_event: "di"
+  reference_program: "marketing digital"
+  programas_originales:
+    - "neuropsicologia clinica"
+    - "docencia universitaria"
+    - "marketing digital"
+    - "administracion financiera"
+    - "talento humano"
+    - "direccion financiera"
+    - "ciberseguridad"
+    - "gestion talento humano"
