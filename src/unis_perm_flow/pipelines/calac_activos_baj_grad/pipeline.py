@@ -12,7 +12,6 @@ from .nodes import momento_baja,\
                    generate_train_coxph_forecast
 
 
-
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
         [node(

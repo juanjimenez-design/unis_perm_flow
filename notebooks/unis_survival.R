@@ -1,5 +1,6 @@
 rm(list = ls())
 # Librarías
+setwd("G:/Unidades compartidas/Alianzas/3. Data/UNIS/unis-perm-flow/notebooks")
 library(survival)
 library(survminer)
 library(ggplot2)
@@ -7,17 +8,17 @@ library(dplyr)
 library(broom)
 # Cargar datos parquet
 library(arrow)
-df <- read_parquet("../data/03_primary/unis_estaca_survival.parquet")
+#df <- read_parquet("../data/03_primary/unis_estaca_survival.parquet")
+df = read_parquet('../data/03_Primary/unis_estados_calac_survival.parquet/2026-06-23T16.55.34.059Z/unis_estados_calac_survival.parquet')
 #df = na.omit(df[, c("month", "di", "periodo_inicial", "programa", "mes_gregoriano")])
-df = df %>% 
-      filter(!is.na(periodo_inicial)) 
+
   
 
 # Limpieza de datos ----------------------------------------------------
 
 # Cuando el mes sea 16 y di sea 1, es decir, cuando el evento de interés ocurra en el mes 16,
 # di tiene que ser cero
-df = df %>% mutate(di = ifelse(month == 16 & di == 1, 0, di))
+#df = df %>% mutate(di = ifelse(month == 16 & di == 1, 0, di))
 
 # Preparar datos.Se convierten los datos categóricos a factores y se establece un nivel de referencia para cada uno de ellos.
 df$periodo_inicial = as.factor(df$periodo_inicial)
@@ -231,6 +232,44 @@ plot(residuals_schoenfeld, main = "Residuos de Schoenfeld",
      xlab = "Tiempo", ylab = "Residuos de Schoenfeld", col = "blue", lwd = 2)
 print(residuals_schoenfeld)
 
+
+
+
+# Proceso Final -----------------------------------------------------------
+
+# Preparar datos.Se convierten los datos categóricos a factores y se establece un nivel de referencia para cada uno de ellos.
+df = read_parquet('../data/03_Primary/unis_estados_calac_survival.parquet/2026-06-23T16.55.34.059Z/unis_estados_calac_survival.parquet')
+df$periodo_inicial = as.factor(df$periodo_inicial)
+df$periodo_inicial = relevel(df$periodo_inicial, ref = "9243") 
+df$programa = as.factor(df$programa)
+df$programa = relevel(df$programa, ref = "marketing digital")
+
+best_model = coxph(Surv(month, di) ~ programa , data = df)
+pred_individual <- survfit(best_model, newdata = df)                                    
+obtener_p_mes <- function(fit, t_objetivo) {
+  # fit$time y fit$surv contienen los pasos de la escalera.
+  # summary(fit, times = ...) nos da la supervivencia exacta en ese tiempo (o el inmediato anterior)
+  res <- summary(fit, times = t_objetivo, extend = TRUE)
+  return(res$surv) # Retorna una matriz de dimensiones [tiempo, individuos]
+}          
+
+matriz_probabilidades <- obtener_p_mes(pred_individual, meses_evaluar)
+df_probabilidades <- df %>% 
+  # Nos quedamos con tus variables de identificación y la variable predictora del modelo
+  select(identificacion, periodo_inicial, nivel, programa, month, di) %>%
+  # Añadimos la matriz de probabilidades como una lista por cada estudiante
+  mutate(p_sobrevivir = as.data.frame(matriz_probabilidades) %>% as.list()) %>%
+  # Expandimos el dataset para que cada estudiante tenga sus filas por mes
+  unnest(p_sobrevivir) %>%
+  # Agregamos la columna que identifica a qué mes corresponde cada probabilidad
+  group_by(identificacion,periodo_inicial, programa,month, di) %>% 
+  mutate(mes = meses_evaluar) %>%
+  ungroup()
+
+
+
+
+
 # Proyecciones ------------------------------------------------------------
 
 library(purrr)
@@ -296,9 +335,9 @@ tabla_superv_base <- data.frame(
   p_sobrevivir = as.vector(t(summary(pred_cox, times = 1:max_meses, extend = TRUE)$surv))
 )
 
-# ==============================================================================
+
 # 3. CALCULAR LA TABLA DE VIDA PROYECTADA (Totales Esperados)
-# ==============================================================================
+
 tabla_vida_nuevos <- nuevos_estudiantes %>%
   # Unimos los estudiantes iniciales con sus respectivas probabilidades por mes
   left_join(tabla_superv_base, by = "programa") %>%
@@ -317,7 +356,7 @@ tabla_vida_nuevos <- nuevos_estudiantes %>%
 print(tabla_vida_nuevos)
 
 
-
+summary(best_model)
 
 
 
