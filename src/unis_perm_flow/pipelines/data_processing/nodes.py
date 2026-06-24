@@ -351,7 +351,12 @@ def unis_preprocessing_calaca(
     mask_fechas_uptoday = df_ext[col_fecha_ini_sem] <= pd.Timestamp.now()
     df_ext_uptoday = df_ext.loc[mask_fechas_uptoday].copy()
 
-    return df_ext.reset_index(drop=True),df_ext_uptoday.reset_index(drop=True)
+    # 10. Calendario Académico hasta 09-2025
+    date_presupuesto = datetime.strptime('2025-09-30', "%Y-%m-%d")
+    mask_fechas_presupuesto = df_ext[col_fecha_ini_sem] <= date_presupuesto
+    df_ext_uppresupuesto = df_ext.loc[mask_fechas_uptoday].copy()
+
+    return df_ext.reset_index(drop=True),df_ext_uptoday.reset_index(drop=True), df_ext_uppresupuesto.reset_index(drop=True), 
 
 
 #-----------------------------------------------------------------------------#

@@ -8,6 +8,18 @@ unis_ventas_id_inconcert:
   load_args:
     sheet_name: 0    
 
+unis_estaca_presupuesto:
+  type: unis_pipeline.datasets.google_sheets_dataset.GoogleSheetsDataset
+  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQuG_A6Vxk_0DAJkYh3jWMACGg1mTxGoasxIgLo1RBALzUPv5wwpCptzv_BPAQoxw/pub?output=xlsx"
+  load_args:
+    sheet_name: 'UNIS'
+
+unis_estaca_presupuesto_completo:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/unis_estaca_presupuesto_completo.xlsx
+  load_args:
+    engine: openpyxl
+    sheet_name: ['UNIS']
 
 # Calendario Académico
 unis_calaca:
@@ -50,13 +62,28 @@ unis_calendario_extendido_uptoday:
   type: pandas.ParquetDataset
   filepath: data/02_intermediate/unis_calendario_extendido_uptoday.parquet
 
+unis_calendario_extendido_presupuesto:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/unis_calendario_extendido_presupuesto.parquet
+
 unis_estaca_sd:
   type: pandas.ParquetDataset
   filepath: data/02_intermediate/unis_estaca_sin_duplicados.parquet
+  versioned: true
 
 unis_estaca_cd:
   type: pandas.ParquetDataset
   filepath: data/02_intermediate/unis_estaca_con_duplicados.parquet
+  versioned: true
+
+unis_estaca_sd_presupuesto:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/unis_estaca_sin_duplicados_presupuesto.parquet
+
+unis_estaca_cd_presupuesto:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/unis_estaca_con_duplicados_presupuesto.parquet
+
 
 ## --------------------------------------------------------------------
 ## 03 Primary
