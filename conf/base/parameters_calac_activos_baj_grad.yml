@@ -3,7 +3,7 @@
 #
 # Documentation for this file format can be found in "Parameters"
 # Link: https://docs.kedro.org/en/1.2.0/configuration/parameters.html
-
+#ejecutar_presupuesto: False
 
 # parameters/data_processing.yml
 bajas_calac:
@@ -110,6 +110,9 @@ col_survival:
   - 'periodo_inicial'
   - 'nivel'
   - 'programa'
+  - 'fecha_baja'
+  - 'fecha_inicio'
+  - 'fecha_fin'
   - 'semana_acumulada'
   - 'month'
   - 'mes_gregoriano' 

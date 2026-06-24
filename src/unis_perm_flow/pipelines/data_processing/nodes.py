@@ -354,7 +354,7 @@ def unis_preprocessing_calaca(
     # 10. Calendario Académico hasta 09-2025
     date_presupuesto = datetime.strptime('2025-09-30', "%Y-%m-%d")
     mask_fechas_presupuesto = df_ext[col_fecha_ini_sem] <= date_presupuesto
-    df_ext_uppresupuesto = df_ext.loc[mask_fechas_uptoday].copy()
+    df_ext_uppresupuesto = df_ext.loc[mask_fechas_presupuesto].copy()
 
     return df_ext.reset_index(drop=True),df_ext_uptoday.reset_index(drop=True), df_ext_uppresupuesto.reset_index(drop=True), 
 

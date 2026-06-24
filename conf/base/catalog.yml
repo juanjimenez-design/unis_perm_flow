@@ -118,6 +118,31 @@ unis_estados_calac_survival:
   save_args:
     index: False    
 
+unis_bajas_calendario_academico_presupuesto:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/unis_bajas_calendario_academico_presupuesto.parquet
+  save_args:
+    index: false
+
+unis_graduados_calendario_academico_presupuesto:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/unis_graduados_calendario_academico_presupuesto.parquet
+  save_args:
+    index: false
+
+unis_activos_calendario_presupuesto:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/unis_activos_calendario_presupuesto.parquet
+  save_args:
+    index: false
+
+
+unis_estados_calac_survival_presupuesto:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/unis_estados_calac_survival_presupuesto.parquet
+  save_args:
+    index: False        
+
 ## --------------------------------------------------------------------
 ## 08 Reporting
 ## --------------------------------------------------------------------
