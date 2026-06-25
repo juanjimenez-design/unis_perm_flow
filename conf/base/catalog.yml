@@ -243,4 +243,15 @@ modelo_cox_desercion:
   backend: pickle
   versioned: true 
 
+# Presupuesto
+
+df_cox_preparado_presupuesto:
+  type: pandas.ParquetDataset
+  filepath: data/04_Feature/df_cox_preparado_presupuesto.parquet
+
+modelo_cox_desercion_presupuesto:
+  type: pickle.PickleDataset
+  filepath: data/06_Models/modelo_cox_desercion_presupuesto.pkl
+  backend: pickle
+  versioned: true 
 
