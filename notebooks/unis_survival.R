@@ -10,7 +10,7 @@ library(broom)
 library(arrow)
 #df <- read_parquet("../data/03_primary/unis_estaca_survival.parquet")
 df = read_parquet('../data/03_Primary/unis_estados_calac_survival.parquet/2026-06-23T16.55.34.059Z/unis_estados_calac_survival.parquet')
-#df = na.omit(df[, c("month", "di", "periodo_inicial", "programa", "mes_gregoriano")])
+df = na.omit(df[, c("month", "di", "periodo_inicial", "programa", "mes_gregoriano")])
 
   
 
@@ -66,7 +66,7 @@ ggsurvplot(km_fit, data = df,
 
 # Ajuste del modelo boxcox ------------------------------------------------
 
-modelo.coxph = coxph(Surv(month, di) ~ periodo_inicial + programa , data = df)
+modelo.coxph = coxph(Surv(month, di) ~  programa , data = df)
 
 ## Stepwise 
 modelAll.coxph = coxph(Surv(month, di) ~ periodo_inicial + programa , data = df)

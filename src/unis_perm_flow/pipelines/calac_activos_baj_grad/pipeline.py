@@ -121,12 +121,12 @@ def create_pipeline(**kwargs) -> Pipeline:
     # params: dict = conf_loader["parameters"]
     # ejecutar_presupuesto = params.get("ejecutar_presupuesto", False)
     ejecutar_presupuesto = os.getenv("PRESUPUESTO", "false").lower() == "true"
-
+    fecha_presupuesto = 'fecha_actual'
     # 3. Si se activa la bandera, agregamos los sufijos automáticamente
     if ejecutar_presupuesto:
         estaca = f"{estaca}_presupuesto"                  # -> unis_estaca_sd_presupuesto
         calendario = "unis_calendario_extendido_presupuesto" # -> Tu nombre del catálogo
-        
+        fecha_presupuesto = 'fecha_presupuesto'
         out_bajas = f"{out_bajas}_presupuesto"            # -> unis_bajas_calendario_academico_presupuesto
         out_graduados = f"{out_graduados}_presupuesto"    # -> unis_graduados_calendario_academico_presupuesto
         out_activos = f"{out_activos}_presupuesto"        # -> unis_activos_calendario_presupuesto
@@ -172,6 +172,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs={
                     "unis_estaca": estaca,
                     "unis_calaca": calendario,
+                    "fecha_presupuesto": "params:" + fecha_presupuesto,
                     "dict_duracion": "params:graduados_calac.dict_niveles_duracion",
                     "col_di": "params:activos_calac.col_di",
                     "col_gi": "params:activos_calac.col_gi",

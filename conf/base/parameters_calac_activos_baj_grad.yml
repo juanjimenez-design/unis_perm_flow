@@ -5,6 +5,9 @@
 # Link: https://docs.kedro.org/en/1.2.0/configuration/parameters.html
 #ejecutar_presupuesto: False
 
+fecha_presupuesto : "2025-09-30"
+fecha_actual : False
+
 # parameters/data_processing.yml
 bajas_calac:
   unis_col_fechadef: 'fecha_de_baja_d'
@@ -24,13 +27,8 @@ graduados_calac:
   # Configuración de Duraciones
   dict_niveles_duracion:
     maestria:
-      #default: { semanas: 48, meses: 12, bloques: 6, periodos: 3 }
       default: { semanas: 64, meses: 16, bloques: 8, periodos: 4 }
-    #especializacion:
-      #default: { semanas: 32, meses: 8, bloques: 4, periodos: 2 }
-    #pregrado:
-     # default: { semanas: 128, meses: 32, bloques: 16, periodos: 8 }
-      #derecho: { semanas: 144, meses: 36, bloques: 18, periodos: 9 }
+
   
   # Parámetros de la función
   graduation_col_gi: "gi"

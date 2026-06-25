@@ -169,7 +169,8 @@ def momento_activos(
     fallback_weeks: int,
     join_left: str,   
     join_right: str,  
-    group_key: str
+    group_key: str,
+    fecha_presupuesto: str
 ) -> pd.DataFrame:
     """
     Sitúa estudiantes activos en el calendario académico e identifica rezagos (ENGI).
@@ -194,11 +195,17 @@ def momento_activos(
         (unis_estaca[col_di] == 0) & (unis_estaca[col_gi] == 0)
     ].copy()
     
-    # Generamos fecha actual normalizada y aseguramos tipos
     unis_activos[join_left] = pd.to_datetime(pd.Timestamp.now()).normalize()
     unis_activos[join_left] = unis_activos[join_left].astype('datetime64[ns]')
-    unis_calaca[join_right] = unis_calaca[join_right].astype('datetime64[ns]')
-    
+    unis_calaca[join_right] = unis_calaca[join_right].astype('datetime64[ns]') 
+
+    # Generamos fecha actual normalizada y aseguramos tipos
+    if  fecha_presupuesto:
+        unis_activos[join_left] = pd.to_datetime(datetime.strptime(fecha_presupuesto, "%Y-%m-%d")).normalize()
+        unis_activos[join_left] = unis_activos[join_left].astype('datetime64[ns]')
+        unis_calaca[join_right] = unis_calaca[join_right].astype('datetime64[ns]')
+           
+
     unis_activos = unis_activos.sort_values(join_left)
     unis_calaca = unis_calaca.sort_values(join_right)
 
